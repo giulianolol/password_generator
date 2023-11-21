@@ -1,5 +1,12 @@
 from functions import *
 
-#archivo = open("Libro1.xlsx")
+still_using_program = "1"
 
-print(generate_password())
+while still_using_program == "1":
+    
+    still_using_program = main_menu()
+
+
+# password = generate_password()
+   
+# save_and_print_password(password, counter)
