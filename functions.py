@@ -2,8 +2,6 @@ caracteres = ["a","b","c","f","g","h","i","j","k","l","m","n","ñ","o","p","q","
 
 import os, random, time
 
-
-
 def generate_password():
     """
     Summary: This function generates a random password
@@ -16,8 +14,14 @@ def generate_password():
     
     turn_numbers = input(f"Ingrese la cantidad de caracteres que quiere que tenga su contraseña (Must be less or equal to {len(caracteres)}): ")
     
-    if turn_numbers.isdigit():
+    turn_numbers = int(turn_numbers)
     
+    while turn_numbers >= 36 or turn_numbers <= 0:
+        
+        print ("Error, invalid number.")
+        
+        turn_numbers = input(f"Ingrese la cantidad de caracteres que quiere que tenga su contraseña (Must be less or equal to {len(caracteres)}): ")
+        
         turn_numbers = int(turn_numbers)
     
     try:
@@ -49,7 +53,7 @@ def show_passwords(file):
         
         for lines in file.readlines():    
             
-            if lines == "":
+            if not lines:
                 
                 print("Check if the file is empty.")
                 
@@ -84,7 +88,7 @@ def save_and_print_password(password:str, file):
         
         print("Error, The password could not be saved.")
 #------------------------------------------------------------------------------>
-def main_menu():
+def main_menu(still_using_program):
     
     """
     Summary: This function is the main menu
@@ -98,15 +102,15 @@ def main_menu():
      
         key = ""
         
-        key = input("Welcome, this the main menu of the password generator.\n- Press key number 1 to see all the passwords previously generated.\n- Press 2 to generate a new password.\n- Press 3 to exit the program.")  
+        key = input("Welcome, this the main menu of the password generator.\n- Press key number 1 to see all the passwords previously generated.\n- Press 2 to generate a new password.\n- Press 3 to clean all the passwords.\n- Press 0 to exit the program.\n")  
         
-        while key != "1" and key != "2" and key != "3":
+        while key != "1" and key != "2" and key != "3" and key != "0":
             
             print("Sorry, invalid key")
                     
-            time.sleep(2)
+            time.sleep(1)
             
-            key = input("Welcome, this the main menu of the password generator.\n- Press key number 1 to see all the passwords previously generated.\n- Press 2 to generate a new password.\n- Press 3 to exit the program.") 
+            key = input("Welcome, this the main menu of the password generator.\n- Press 1 to see all the passwords previously generated.\n- Press 2 to generate a new password.\n- Press 3 to delete all passwords\n- Press 0 to exit the program.") 
                         
         if key == "1":
                         
@@ -120,18 +124,30 @@ def main_menu():
                 
         elif key == "3":
             
-            print("Thanks for using our program. Have a nice day.")
-                       
-        still_using_program = input("Press key number 1 to continue using the program or press key number 2 to stop using the program.")
-        
-        if still_using_program == "1":
-                
-            return still_using_program
-        
-        elif still_using_program =="2":
+            file.close()
+            
+            file = open("pass.txt", "w")
             
             file.close()
             
-            return still_using_program
+            print("All passwords have been deleted.")
         
+        still_using_program = input("Press key number 1 to continue using the program or press key number 2 to stop using the program.")
+        
+        while still_using_program != "1" and still_using_program != "2":
+                
+            print ("Error, invalid key.")
+                    
+            still_using_program = input("Press key number 1 to continue using the program or press key number 2 to stop using the program.")    
             
+        if still_using_program == "1":
+                        
+            return still_using_program
+                
+        elif still_using_program =="2":
+                    
+            file.close()
+                    
+            return still_using_program
+
+         
